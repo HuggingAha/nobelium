@@ -3,7 +3,7 @@ const BLOG = {
   author: 'Baiye',
   email: 'huggingaha@gmail.com',
   link: 'https://huggingaha-blog.vercel.app/',
-  description: '技术博客',
+  description: '思行无辍',
   lang: 'zh-CN', // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES']
   timezone: 'Asia/Shanghai', // Your Notion posts' date will be interpreted as this timezone. See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for all options.
   appearance: 'auto', // ['light', 'dark', 'auto'],
