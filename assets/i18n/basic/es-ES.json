@@ -7,7 +7,10 @@
   },
   "PAGINATION": {
     "PREV": "Anterior",
-    "NEXT": "Siguiente"
+    "NEXT": "Siguiente",
+    "PAGE": "Página {page} de {total}",
+    "JUMP": "Ir",
+    "JUMP_PLACEHOLDER": "Página"
   },
   "POST": {
     "BACK": "Atrás",

@@ -7,7 +7,10 @@
   },
   "PAGINATION": {
     "PREV": "上一页",
-    "NEXT": "下一页"
+    "NEXT": "下一页",
+    "PAGE": "第 {page} 页 / 共 {total} 页",
+    "JUMP": "跳转",
+    "JUMP_PLACEHOLDER": "页码"
   },
   "POST": {
     "BACK": "返回",

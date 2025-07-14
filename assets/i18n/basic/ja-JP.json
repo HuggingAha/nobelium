@@ -7,7 +7,10 @@
   },
   "PAGINATION": {
     "PREV": "前ページ",
-    "NEXT": "次ページ"
+    "NEXT": "次ページ",
+    "PAGE": "{page} / {total} ページ",
+    "JUMP": "ジャンプ",
+    "JUMP_PLACEHOLDER": "ページ"
   },
   "POST": {
     "BACK": "戻る",
