@@ -19,7 +19,7 @@ const NavBar = () => {
 
   const getThemeIcon = () => {
     if (!isAutoMode) return null
-    if (manualTheme === null) return '⚙️' // Auto
+    // if (manualTheme === null) return '⚙️' // Auto
     if (manualTheme === 'light') return '☀️' // Light
     return '🌙' // Dark
   }
