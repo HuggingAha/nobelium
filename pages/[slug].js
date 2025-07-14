@@ -46,7 +46,14 @@ export default function BlogPost ({ post, blockMap, emailHash }) {
       >
         <a>
           <button
-            onClick={() => router.push(BLOG.path || '/')}
+            onClick={() => {
+              // 如果有历史记录，返回上一页，否则返回首页
+              if (window.history.length > 2) {
+                router.back()
+              } else {
+                router.push(BLOG.path || '/')
+              }
+            }}
             className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
           >
             ← {locale.POST.BACK}
