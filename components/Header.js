@@ -19,7 +19,7 @@ const NavBar = () => {
 
   const getThemeIcon = () => {
     if (!isAutoMode) return null
-    // if (manualTheme === null) return '⚙️' // Auto
+    if (manualTheme === null) return '⚙️' // Auto
     if (manualTheme === 'light') return '☀️' // Light
     return '🌙' // Dark
   }
@@ -43,7 +43,7 @@ const NavBar = () => {
         <button
           onClick={toggleTheme}
           className="ml-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-          title={manualTheme === null ? 'Auto mode' : manualTheme === 'light' ? 'Light mode' : 'Dark mode'}
+          title={manualTheme === 'light' ? 'Light mode' : 'Dark mode'}
         >
           <span className="text-lg">{getThemeIcon()}</span>
         </button>
