@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 柔雾椭圆渐变 -->
+    <radialGradient id="mist" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#fff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity=".28"/>
+    </radialGradient>
+
+    <!-- 手颤水波纹 -->
+    <filter id="wave" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="turbulence" baseFrequency="0.04 0.06" numOctaves="2" seed="7" result="turb"/>
+      <feDisplacementMap in="SourceGraphic" in2="turb" scale="4"/>
+    </filter>
+  </defs>
+
+  <!-- 背景：椭圆晨雾 -->
+  <rect width="240" height="240" fill="#f6f5f2"/>
+  <ellipse cx="120" cy="120" rx="110" ry="90" fill="url(#mist)" transform="rotate(-15 120 120)"/>
+
+  <!-- 一条带转折与手颤的“行” -->
+  <path id="trace"
+        d="M 30 120
+           C 55 55, 95 55, 120 75
+           C 145 95, 185 95, 210 120
+           C 220 160, 220 160, 205 195"
+        stroke="#2c2c2c"
+        stroke-width="2"
+        fill="none"
+        stroke-linecap="round"
+        stroke-dasharray="360" stroke-dashoffset="360"
+        filter="url(#wave)">
+    <animate attributeName="stroke-dashoffset"
+             from="360" to="0"
+             dur="6.7s"
+             repeatCount="indefinite"
+             keyTimes="0;1"
+             calcMode="spline"
+             keySplines="0.4 0 0.6 1"/>
+  </path>
+
+  <!-- 思想粒子：不同半径、错时、错色 -->
+  <g id="thoughts">
+    <circle r="3.5" fill="#e85a71" opacity=".75">
+      <animateMotion dur="6.7s" repeatCount="indefinite">
+        <mpath href="#trace"/>
+      </animateMotion>
+    </circle>
+
+    <circle r="2.7" fill="#c87f0e" opacity=".7">
+      <animateMotion dur="6.7s" begin="0.9s" repeatCount="indefinite">
+        <mpath href="#trace"/>
+      </animateMotion>
+    </circle>
+
+    <circle r="4.1" fill="#8ecae6" opacity=".65">
+      <animateMotion dur="6.7s" begin="1.8s" repeatCount="indefinite">
+        <mpath href="#trace"/>
+      </animateMotion>
+    </circle>
+  </g>
+
+  <!-- 行动涟漪：素数周期，淡入淡出 -->
+  <circle id="ripple" cx="120" cy="120" r="5"
+          stroke="#2c2c2c" stroke-width="1.2" fill="none" opacity="0">
+    <animate attributeName="r" values="5;38" dur="3.3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0" dur="3.3s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 交汇微光：呼吸感 -->
+  <circle cx="120" cy="120" r="6" fill="#fff" opacity=".9">
+    <animate attributeName="r" values="5.8;7.5;5.8" dur="3.3s"
+             repeatCount="indefinite"
+             calcMode="spline"
+             keySplines=".42 0 .58 1"/>
+  </circle>
+</svg>
