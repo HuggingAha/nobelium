@@ -8,14 +8,24 @@ import useTheme from '@/lib/theme'
 const NavBar = () => {
   const BLOG = useConfig()
   const locale = useLocale()
+  const { toggleTheme, isAutoMode, manualTheme } = useTheme()
+  
   const links = [
     { id: 0, name: locale.NAV.INDEX, to: BLOG.path || '/', show: true },
     { id: 1, name: locale.NAV.ABOUT, to: '/about', show: BLOG.showAbout },
     { id: 2, name: locale.NAV.RSS, to: '/feed', show: true, external: true },
     { id: 3, name: locale.NAV.SEARCH, to: '/search', show: true }
   ]
+
+  const getThemeIcon = () => {
+    if (!isAutoMode) return null
+    if (manualTheme === null) return '⚙️' // Auto
+    if (manualTheme === 'light') return '☀️' // Light
+    return '🌙' // Dark
+  }
+
   return (
-    <div className="flex-shrink-0">
+    <div className="flex-shrink-0 flex items-center">
       <ul className="flex flex-row">
         {links.map(
           link =>
@@ -29,6 +39,15 @@ const NavBar = () => {
             )
         )}
       </ul>
+      {isAutoMode && (
+        <button
+          onClick={toggleTheme}
+          className="ml-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          title={manualTheme === null ? 'Auto mode' : manualTheme === 'light' ? 'Light mode' : 'Dark mode'}
+        >
+          <span className="text-lg">{getThemeIcon()}</span>
+        </button>
+      )}
     </div>
   )
 }
