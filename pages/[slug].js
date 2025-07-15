@@ -40,36 +40,33 @@ export default function BlogPost ({ post, blockMap, emailHash }) {
       {/* Back and Top */}
       <div
         className={cn(
-          'px-4 flex justify-between font-medium text-gray-500 dark:text-gray-400 my-5',
+          'px-4 flex justify-between text-sm my-8',
           fullWidth ? 'md:px-24' : 'mx-auto max-w-2xl'
         )}
       >
-        <a>
-          <button
-            onClick={() => {
-              // 如果有历史记录，返回上一页，否则返回首页
-              if (window.history.length > 2) {
-                router.back()
-              } else {
-                router.push(BLOG.path || '/')
-              }
-            }}
-            className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
-          >
-            ← {locale.POST.BACK}
-          </button>
-        </a>
-        <a>
-          <button
-            onClick={() => window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            })}
-            className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
-          >
-            ↑ {locale.POST.TOP}
-          </button>
-        </a>
+        <button
+          onClick={() => {
+            if (window.history.length > 2) {
+              router.back()
+            } else {
+              router.push(BLOG.path || '/')
+            }
+          }}
+          className="flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors group"
+        >
+          <span className="transform group-hover:-translate-x-1 transition-transform">←</span>
+          <span className="ml-2">{locale.POST.BACK}</span>
+        </button>
+        <button
+          onClick={() => window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })}
+          className="flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors group"
+        >
+          <span className="mr-2">{locale.POST.TOP}</span>
+          <span className="transform group-hover:-translate-y-0.5 transition-transform">↑</span>
+        </button>
       </div>
 
       <Comments frontMatter={post} />

@@ -63,10 +63,8 @@ const Pagination = ({ page, showNext, totalPages }) => {
   const pages = generatePages()
 
   return (
-    <div className="flex flex-col items-center space-y-6 mt-12 mb-12">
-      {/* Page Numbers */}
-      <div className="flex items-center space-x-1 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-2">
-        {/* Previous Button */}
+    <div className="flex justify-center items-center mt-12 mb-12 space-x-1">
+      <div className="flex items-center bg-white/50 dark:bg-gray-900/30 backdrop-blur-sm rounded-full px-1 py-1 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
         {currentPage > 1 && (
           <Link
             href={
@@ -74,27 +72,24 @@ const Pagination = ({ page, showNext, totalPages }) => {
                 ? `${BLOG.path || '/'}`
                 : `/page/${currentPage - 1}`
             }
-            className="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hover:shadow-sm"
+            className="p-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            ← {locale.PAGINATION.PREV}
+            ←
           </Link>
         )}
 
-        {/* Page Numbers */}
         {pages.map((pageNum, index) => (
-          <div key={index}>
+          <div key={index} className="flex items-center">
             {pageNum === '...' ? (
-              <span className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
-                ...
-              </span>
+              <span className="px-2 text-sm text-gray-400 dark:text-gray-600">... </span>
             ) : pageNum === currentPage ? (
-              <span className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-md">
+              <span className="px-3 py-1 text-sm font-medium text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 rounded-full">
                 {pageNum}
               </span>
             ) : (
               <Link
                 href={pageNum === 1 ? `${BLOG.path || '/'}` : `/page/${pageNum}`}
-                className="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hover:shadow-sm"
+                className="px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 {pageNum}
               </Link>
@@ -102,42 +97,19 @@ const Pagination = ({ page, showNext, totalPages }) => {
           </div>
         ))}
 
-        {/* Next Button */}
         {currentPage < calculatedTotalPages && (
           <Link
             href={`/page/${currentPage + 1}`}
-            className="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hover:shadow-sm"
+            className="p-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            {locale.PAGINATION.NEXT} →
+            →
           </Link>
         )}
       </div>
 
-      {/* Page Info */}
-      <div className="text-sm text-gray-600 dark:text-gray-400">
-        {locale.PAGINATION.PAGE?.replace('{page}', currentPage).replace('{total}', calculatedTotalPages) || `第 ${currentPage} 页 / 共 ${calculatedTotalPages} 页`}
+      <div className="ml-4 text-sm text-gray-500 dark:text-gray-400 tabular-nums">
+        {currentPage} / {calculatedTotalPages}
       </div>
-
-      {/* Jump to Page */}
-      {calculatedTotalPages > 1 && (
-        <form onSubmit={handleJump} className="flex items-center space-x-2">
-          <input
-            type="number"
-            min="1"
-            max={calculatedTotalPages}
-            value={jumpPage}
-            onChange={(e) => setJumpPage(e.target.value)}
-            placeholder={locale.PAGINATION.JUMP_PLACEHOLDER || '页码'}
-            className="w-16 px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-          />
-          <button
-            type="submit"
-            className="px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-          >
-            {locale.PAGINATION.JUMP || '跳转'}
-          </button>
-        </form>
-      )}
     </div>
   )
 }
