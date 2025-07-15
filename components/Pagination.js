@@ -65,7 +65,7 @@ const Pagination = ({ page, showNext, totalPages }) => {
   return (
     <div className="flex justify-center items-center mt-12 mb-12">
       <div className="flex items-center space-x-1 bg-white/50 dark:bg-gray-900/30 backdrop-blur-sm rounded-full px-3 py-1.5 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
-        <!-- 上一页 -->
+        {/* 上一页 */}
         {currentPage > 1 ? (
           <Link
             href={currentPage - 1 === 1 ? `${BLOG.path || '/'}` : `/page/${currentPage - 1}`}
@@ -84,7 +84,7 @@ const Pagination = ({ page, showNext, totalPages }) => {
           </span>
         )}
 
-        <!-- 页码 -->
+        {/* 页码 */}
         <div className="flex items-center space-x-0.5">
           {pages.map((pageNum, index) => (
             <div key={index}>
@@ -106,38 +106,38 @@ const Pagination = ({ page, showNext, totalPages }) => {
           ))}
         </div>
 
-        <!-- 页码信息 -->
+        {/* 页码信息 */}
         <div className="px-2 text-xs text-gray-500 dark:text-gray-400 border-l border-gray-200 dark:border-gray-700">
           {currentPage}/{calculatedTotalPages}
         </div>
 
-        <!-- 下一页 -->
+        {/* 下一页 */}
         {currentPage < calculatedTotalPages ? (
           <Link
             href={`/page/${currentPage + 1}`}
             className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
             title="下一页"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
         ) : (
           <span className="p-1.5 text-gray-300 dark:text-gray-600">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </span>
         )}
 
-        <!-- 快速跳转 -->
+        {/* 快速跳转 */}
         <div className="group relative">
           <button
             type="button"
             className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
             title="跳转到指定页"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
           </button>
@@ -146,15 +146,7 @@ const Pagination = ({ page, showNext, totalPages }) => {
             onMouseEnter={(e) => e.currentTarget.classList.remove('opacity-0', 'invisible')}
             onMouseLeave={(e) => e.currentTarget.classList.add('opacity-0', 'invisible')}
           >
-            <form onSubmit={handleJump} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 border border-gray-200 dark:border-gray-700"
-              onSubmit={(e) => {
-                e.preventDefault()
-                const pageNum = parseInt(jumpPage)
-                if (pageNum && pageNum >= 1 && pageNum <= calculatedTotalPages) {
-                  handleJump(e)
-                }
-              }}
-            >
+            <form onSubmit={handleJump} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 border border-gray-200 dark:border-gray-700">
               <div className="flex items-center space-x-2">
                 <input
                   type="number"
