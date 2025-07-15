@@ -64,7 +64,7 @@ const Pagination = ({ page, showNext, totalPages }) => {
 
   return (
     <div className="flex justify-center items-center mt-12 mb-12">
-      <div className="flex items-center space-x-2 bg-white/50 dark:bg-gray-900/30 backdrop-blur-sm rounded-full px-3 py-2 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
+      <div className="flex items-center space-x-1 bg-white/50 dark:bg-gray-900/30 backdrop-blur-sm rounded-full px-3 py-1.5 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
         <!-- 上一页 -->
         {currentPage > 1 ? (
           <Link
@@ -85,36 +85,19 @@ const Pagination = ({ page, showNext, totalPages }) => {
         )}
 
         <!-- 页码 -->
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-0.5">
           {pages.map((pageNum, index) => (
             <div key={index}>
               {pageNum === '...' ? (
                 <span className="px-1 text-xs text-gray-400 dark:text-gray-600">...</span>
               ) : pageNum === currentPage ? (
-                <div className="relative">
-                  <span className="px-2.5 py-1 text-xs font-medium text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 rounded-full">
-                    {pageNum}
-                  </span>
-                  <!-- 页码输入框 -->
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto">
-                    <form onSubmit={handleJump} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 border border-gray-200 dark:border-gray-700">
-                      <input
-                        type="number"
-                        min="1"
-                        max={calculatedTotalPages}
-                        value={jumpPage}
-                        onChange={(e) => setJumpPage(e.target.value)}
-                        onFocus={(e) => e.target.select()}
-                        className="w-12 px-2 py-1 text-xs text-center border-0 bg-transparent focus:outline-none focus:ring-0 dark:text-white"
-                        placeholder={currentPage.toString()}
-                      />
-                    </form>
-                  </div>
-                </div>
+                <span className="px-2 py-0.5 text-xs font-medium text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 rounded-full">
+                  {pageNum}
+                </span>
               ) : (
                 <Link
                   href={pageNum === 1 ? `${BLOG.path || '/'}` : `/page/${pageNum}`}
-                  className="px-2.5 py-1 text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="px-2 py-0.5 text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   {pageNum}
                 </Link>
