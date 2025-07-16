@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import Image from 'next/image'
+import Link from 'next/link'
 import cn from 'classnames'
 import { useConfig } from '@/lib/config'
 import useTheme from '@/lib/theme'
 import FormattedDate from '@/components/FormattedDate'
-import TagItem from '@/components/TagItem'
 import NotionRenderer from '@/components/NotionRenderer'
 import TableOfContents from '@/components/TableOfContents'
+import ReadingProgress from '@/components/ReadingProgress'
 
 /**
  * A post renderer
@@ -64,39 +65,35 @@ export default function Post (props) {
       )}
       <div className="self-stretch -mt-4 flex flex-col items-center lg:flex-row lg:items-stretch">
         {!fullWidth && (
-          <div className="flex-1 hidden lg:block pr-8">
-            <div className="sticky top-24 space-y-8">
-              {/* 极简阅读进度 */}
-              <div className="space-y-2">
-                <div className="h-px bg-gray-200 dark:bg-gray-700" />
-                <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                  <span>阅读进度</span>
-                  <span className="tabular-nums">00:00</span>
-                </div>
-              </div>
-
-              {/* 极简信息 */}
-              <div className="space-y-3">
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  {post.date}
-                </div>
-                {post.tags && (
-                  <div className="flex flex-wrap gap-1">
-                    {post.tags.slice(0, 3).map(tag => (
-                      <span key={tag} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-400">
-                        {tag}
-                      </span>
+          <div className="hidden lg:block" style={{ width: '180px', paddingRight: '32px' }}>
+            <div className="sticky top-24 space-y-6">
+              {/* 阅读进度指示器 */}
+              <ReadingProgress />
+              
+              {/* 标签云 */}
+              {post.tags && (
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    标签
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {post.tags.map(tag => (
+                      <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
+                        <span className="text-xs px-2 py-1 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-md transition-colors cursor-pointer border border-gray-200 dark:border-gray-700">
+                          {tag}
+                        </span>
+                      </Link>
                     ))}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         )}
-        <div className={fullWidth ? 'flex-1 pr-4' : 'flex-none w-full max-w-2xl px-4'}>
+        <div className={fullWidth ? 'flex-1 px-4' : 'flex-none w-full max-w-4xl px-4'}>
           <NotionRenderer recordMap={blockMap} fullPage={false} darkMode={dark} />
         </div>
-        <div className={cn('order-first lg:order-[unset] w-full lg:w-auto max-w-2xl lg:max-w-[unset] lg:min-w-[200px]', fullWidth ? 'flex-none' : 'flex-1')}>
+        <div className={cn('order-first lg:order-[unset] w-full lg:w-auto', fullWidth ? 'flex-none' : 'flex-1')} style={{ minWidth: '200px', paddingLeft: '24px' }}>
           <TableOfContents blockMap={blockMap} className="pt-3 sticky" style={{ top: '65px' }} />
         </div>
       </div>

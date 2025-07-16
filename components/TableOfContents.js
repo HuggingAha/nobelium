@@ -27,21 +27,28 @@ export default function TableOfContents ({ blockMap, className, style }) {
 
   return (
     <aside
-      className={cn(className, 'pl-4 text-sm text-zinc-700/70 dark:text-neutral-400')}
+      className={cn(className, 'text-sm text-gray-600 dark:text-gray-400')}
       style={style}
     >
-      {nodes.map(node => (
-        <div key={node.id}>
+      <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+        目录
+      </h4>
+      <nav className="space-y-1">
+        {nodes.map(node => (
           <a
+            key={node.id}
             data-target-id={node.id}
-            className="block py-1 hover:text-black dark:hover:text-white cursor-pointer transition duration-100"
-            style={{ paddingLeft: (node.indentLevel * 24) + 'px' }}
+            className="block py-1.5 text-xs hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer transition-colors duration-150 border-l border-transparent hover:border-gray-300 dark:hover:border-gray-600"
+            style={{ 
+              paddingLeft: `${8 + node.indentLevel * 12}px`,
+              borderLeftWidth: node.indentLevel === 0 ? '0px' : '1px'
+            }}
             onClick={() => scrollTo(node.id)}
           >
             {node.text}
           </a>
-        </div>
-      ))}
+        ))}
+      </nav>
     </aside>
   )
 }
