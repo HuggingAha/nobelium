@@ -68,10 +68,10 @@ export default function Post (props) {
         </nav>
       )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row lg:gap-x-16">
           {/* Left Sidebar */}
           {!fullWidth && (
-            <div className="hidden lg:block lg:w-48 lg:flex-shrink-0">
+            <div className="hidden lg:block lg:w-48 lg:flex-shrink-0 lg:pl-8">
               <div className="sticky top-24">
                 <div className="space-y-6">
                   <div className="pl-4 border-l border-gray-200 dark:border-gray-700">
@@ -136,7 +136,7 @@ export default function Post (props) {
           
           {/* Right Sidebar */}
           {!fullWidth && (
-            <div className="hidden lg:block lg:w-52 lg:flex-shrink-0">
+            <div className="hidden lg:block lg:w-52 lg:flex-shrink-0 lg:pr-4">
               <div className="sticky top-24">
                 <TableOfContents blockMap={blockMap} className="pt-3" style={{ top: '65px' }} />
               </div>
