@@ -55,9 +55,13 @@ export default function Post (props) {
             <FormattedDate date={post.date} />
           </div>
           {post.tags && (
-            <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
+            <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags gap-2">
               {post.tags.map(tag => (
-                <TagItem key={tag} tag={tag} />
+                <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
+                  <span className="text-sm px-2.5 py-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md transition-colors cursor-pointer border border-gray-200 dark:border-gray-700 whitespace-nowrap">
+                    {tag}
+                  </span>
+                </Link>
               ))}
             </div>
           )}
