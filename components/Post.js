@@ -69,57 +69,56 @@ export default function Post (props) {
       )}
       <div className="self-stretch -mt-4 flex flex-col items-center lg:flex-row lg:items-stretch">
         {!fullWidth && (
-          <div className="hidden lg:block" style={{ width: '160px', paddingRight: '40px' }}>
+          <div className="hidden lg:block" style={{ width: '180px', paddingRight: '60px' }}>
             <div className="sticky top-24">
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {/* 阅读进度 */}
-                <ReadingProgress />
+                <div className="pl-4 border-l border-gray-200 dark:border-gray-700">
+                  <ReadingProgress />
+                </div>
                 
-                {/* 文章信息 */}
-                <div className="space-y-6">
-                  {/* 发布日期 */}
-                  <div className="space-y-2">
-                    <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                      发布
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      {new Date(post.date).toLocaleDateString('zh-CN', { 
-                        month: 'short', 
-                        day: 'numeric' 
-                      })}
+                {/* 元信息 */}
+                <div className="pl-4 border-l border-gray-200 dark:border-gray-700 space-y-5">
+                  {/* 日期 */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        {new Date(post.date).toLocaleDateString('zh-CN', { 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
+                      </span>
                     </div>
                   </div>
 
                   {/* 标签 */}
                   {post.tags && post.tags.length > 0 && (
-                    <div className="space-y-3">
-                      <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                        标签
+                    <div>
+                      <div className="flex items-center gap-2 mb-3">
+                        <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          标签
+                        </span>
                       </div>
-                      <div className="space-y-1.5">
-                        {post.tags.map(tag => (
+                      <div className="space-y-2">
+                        {post.tags.slice(0, 4).map(tag => (
                           <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
-                            <div className="group cursor-pointer">
-                              <div className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors duration-200 truncate">
-                                #{tag}
-                              </div>
-                              <div className="h-px bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-400 dark:group-hover:bg-gray-500 transition-colors duration-200" />
+                            <div className="group flex items-center gap-2 cursor-pointer">
+                              <div className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors" />
+                              <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors truncate">
+                                {tag}
+                              </span>
                             </div>
                           </Link>
                         ))}
                       </div>
                     </div>
                   )}
-
-                  {/* 字数统计 */}
-                  <div className="space-y-2">
-                    <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                      阅读
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      {Math.round((post.summary?.length || 0) / 2)} 字
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
