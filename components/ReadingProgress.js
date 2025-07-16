@@ -2,22 +2,12 @@ import { useEffect, useState } from 'react'
 
 const ReadingProgress = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
-  const [readingTime, setReadingTime] = useState('00:00')
 
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight
       const progress = (window.scrollY / totalHeight) * 100
       setScrollProgress(Math.min(progress, 100))
-
-      // Calculate estimated reading time based on scroll position
-      const totalWords = document.querySelector('article')?.textContent?.split(/\s+/).length || 0
-      const wordsPerMinute = 200
-      const totalMinutes = Math.ceil(totalWords / wordsPerMinute)
-      const currentMinutes = Math.floor((progress / 100) * totalMinutes)
-      const remainingMinutes = Math.max(0, totalMinutes - currentMinutes)
-      
-      setReadingTime(`${remainingMinutes}min`)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -27,16 +17,20 @@ const ReadingProgress = () => {
   }, [])
 
   return (
-    <div className="space-y-2">
-      <div className="h-0.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+    <div className="relative">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+          进度
+        </span>
+        <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {Math.round(scrollProgress)}%
+        </span>
+      </div>
+      <div className="relative h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
         <div 
-          className="h-full bg-gray-400 dark:bg-gray-500 transition-all duration-150"
+          className="absolute inset-y-0 left-0 bg-gradient-to-r from-gray-400 to-gray-600 dark:from-gray-500 dark:to-gray-300 rounded-full transition-all duration-300 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
-      </div>
-      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
-        <span>阅读进度</span>
-        <span className="tabular-nums">{readingTime}</span>
       </div>
     </div>
   )

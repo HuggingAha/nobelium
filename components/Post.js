@@ -69,28 +69,59 @@ export default function Post (props) {
       )}
       <div className="self-stretch -mt-4 flex flex-col items-center lg:flex-row lg:items-stretch">
         {!fullWidth && (
-          <div className="hidden lg:block" style={{ width: '180px', paddingRight: '32px' }}>
-            <div className="sticky top-24 space-y-6">
-              {/* 阅读进度指示器 */}
-              <ReadingProgress />
-              
-              {/* 标签云 */}
-              {post.tags && (
-                <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    标签
-                  </h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {post.tags.map(tag => (
-                      <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
-                        <span className="text-xs px-2 py-1 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-md transition-colors cursor-pointer border border-gray-200 dark:border-gray-700">
-                          {tag}
-                        </span>
-                      </Link>
-                    ))}
+          <div className="hidden lg:block" style={{ width: '160px', paddingRight: '40px' }}>
+            <div className="sticky top-24">
+              <div className="space-y-8">
+                {/* 阅读进度 */}
+                <ReadingProgress />
+                
+                {/* 文章信息 */}
+                <div className="space-y-6">
+                  {/* 发布日期 */}
+                  <div className="space-y-2">
+                    <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                      发布
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      {new Date(post.date).toLocaleDateString('zh-CN', { 
+                        month: 'short', 
+                        day: 'numeric' 
+                      })}
+                    </div>
+                  </div>
+
+                  {/* 标签 */}
+                  {post.tags && post.tags.length > 0 && (
+                    <div className="space-y-3">
+                      <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                        标签
+                      </div>
+                      <div className="space-y-1.5">
+                        {post.tags.map(tag => (
+                          <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
+                            <div className="group cursor-pointer">
+                              <div className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors duration-200 truncate">
+                                #{tag}
+                              </div>
+                              <div className="h-px bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-400 dark:group-hover:bg-gray-500 transition-colors duration-200" />
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 字数统计 */}
+                  <div className="space-y-2">
+                    <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                      阅读
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      {Math.round((post.summary?.length || 0) / 2)} 字
+                    </div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         )}
