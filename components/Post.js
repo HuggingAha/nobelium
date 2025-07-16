@@ -124,7 +124,7 @@ export default function Post (props) {
             </div>
           </div>
         )}
-        <div className={fullWidth ? 'flex-1 px-4' : 'flex-none w-full max-w-4xl px-4'}>
+        <div className={fullWidth ? 'flex-1 px-4' : 'flex-none w-full max-w-4xl'}>
           <NotionRenderer recordMap={blockMap} fullPage={false} darkMode={dark} />
         </div>
         <div className={cn('order-first lg:order-[unset] w-full lg:w-auto', fullWidth ? 'flex-none' : 'flex-1')} style={{ minWidth: '200px', paddingLeft: '24px' }}>
