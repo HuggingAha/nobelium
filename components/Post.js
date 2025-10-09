@@ -8,6 +8,9 @@ import FormattedDate from '@/components/FormattedDate'
 import NotionRenderer from '@/components/NotionRenderer'
 import TableOfContents from '@/components/TableOfContents'
 import ReadingProgress from '@/components/ReadingProgress'
+import { Avatar as OptimizedAvatar } from '@/components/ui/OptimizedImage'
+import { Card, CardHeader, CardContent } from '@/components/ui/Card'
+import { Stack } from '@/components/ui/Grid'
 
 /**
  * A post renderer
@@ -39,13 +42,12 @@ export default function Post (props) {
           { 'max-w-2xl px-4': !fullWidth }
         )}>
           <div className="flex mb-4">
-            <a href={BLOG.socialLink || '#'} className="flex">
-              <Image
+            <a href={BLOG.socialLink || '#'} className="flex items-center">
+              <OptimizedAvatar
                 alt={BLOG.author}
-                width={24}
-                height={24}
+                size="sm"
                 src={`https://gravatar.com/avatar/${emailHash}`}
-                className="rounded-full"
+                priority={false}
               />
               <p className="ml-2 md:block">{BLOG.author}</p>
             </a>
@@ -94,16 +96,18 @@ export default function Post (props) {
                     </div>
 
                     {post.tags && post.tags.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-3">
-                          <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                          </svg>
-                          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                            标签
-                          </span>
-                        </div>
-                        <div className="space-y-2">
+                      <Card variant="flat" className="p-0 border-none shadow-none">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                            </svg>
+                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                              标签
+                            </span>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
                           {post.tags.slice(0, 4).map(tag => (
                             <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
                               <div className="group flex items-center gap-2 cursor-pointer">
@@ -114,8 +118,8 @@ export default function Post (props) {
                               </div>
                             </Link>
                           ))}
-                        </div>
-                      </div>
+                        </CardContent>
+                      </Card>
                     )}
                   </div>
                 </div>

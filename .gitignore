@@ -38,3 +38,9 @@ yarn-error.log*
 public/robots.txt
 public/sitemap.xml
 .env*.local
+
+# claude
+BLOG_OPTIMIZATION_PLAN.md
+BLOG_OPTIMIZATION_SUMMARY.md
+PERFORMANCE_VALIDATION_REPORT.md
+nobelium_all_files.txt

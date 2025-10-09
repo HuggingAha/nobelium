@@ -11,6 +11,8 @@ import { LocaleProvider } from '@/lib/locale'
 import { prepareDayjs } from '@/lib/dayjs'
 import { ThemeProvider } from '@/lib/theme'
 import Scripts from '@/components/Scripts'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import PerformanceMonitor from '@/components/PerformanceMonitor'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -21,16 +23,22 @@ export default function MyApp ({ Component, pageProps, config, locale }) {
       <Scripts />
       <LocaleProvider value={locale}>
         <ThemeProvider>
-          <>
-            {process.env.VERCEL_ENV === 'production' && config?.analytics?.provider === 'ackee' && (
-              <Ackee
-                ackeeServerUrl={config.analytics.ackeeConfig.dataAckeeServer}
-                ackeeDomainId={config.analytics.ackeeConfig.domainId}
-              />
-            )}
-            {process.env.VERCEL_ENV === 'production' && config?.analytics?.provider === 'ga' && <Gtag />}
-            <Component {...pageProps} />
-          </>
+          <ErrorBoundary>
+            <>
+              {process.env.VERCEL_ENV === 'production' && config?.analytics?.provider === 'ackee' && (
+                <Ackee
+                  ackeeServerUrl={config.analytics.ackeeConfig.dataAckeeServer}
+                  ackeeDomainId={config.analytics.ackeeConfig.domainId}
+                />
+              )}
+              {process.env.VERCEL_ENV === 'production' && config?.analytics?.provider === 'ga' && <Gtag />}
+
+              {/* 开发环境显示性能监控 */}
+              {process.env.NODE_ENV !== 'production' && <PerformanceMonitor />}
+
+              <Component {...pageProps} />
+            </>
+          </ErrorBoundary>
         </ThemeProvider>
       </LocaleProvider>
     </ConfigProvider>

@@ -5,6 +5,7 @@ import BlogPost from '@/components/BlogPost'
 import Pagination from '@/components/Pagination'
 import { getAllPosts } from '@/lib/notion'
 import { useConfig } from '@/lib/config'
+import { StaggerAnimation } from '@/components/AnimationWrapper'
 
 export async function getStaticProps () {
   const posts = await getAllPosts({ includePages: false })
@@ -28,10 +29,17 @@ export default function Blog ({ postsToShow, page, showNext, totalPages }) {
 
   return (
     <Container title={title} description={description}>
-      {postsToShow.map(post => (
-        <BlogPost key={post.id} post={post} />
-      ))}
-      {<Pagination page={page} showNext={showNext} totalPages={totalPages} />}
+      <StaggerAnimation staggerDelay={100} variant="slideUp">
+        {postsToShow.map((post, index) => (
+          <div key={post.id} className="mb-8">
+            <BlogPost post={post} />
+          </div>
+        ))}
+      </StaggerAnimation>
+
+      <div className="mt-12">
+        <Pagination page={page} showNext={showNext} totalPages={totalPages} />
+      </div>
     </Container>
   )
 }
