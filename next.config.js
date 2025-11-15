@@ -1,3 +1,11 @@
+/**
+ * Bundle Analyzer Integration
+ * Enable with: ANALYZE=true pnpm build
+ */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 性能优化配置
@@ -15,8 +23,8 @@ const nextConfig = {
 
   // 实验性功能
   experimental: {
-    // 优化CSS
-    optimizeCss: true,
+    // 优化CSS - 暂时禁用以避免 critters 依赖问题
+    // optimizeCss: true,
     // 启用Web Vitals
     webVitalsAttribution: ['CLS', 'LCP'],
   },
@@ -90,4 +98,4 @@ const nextConfig = {
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig)
