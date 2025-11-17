@@ -1,5 +1,6 @@
+// components/Post.js
+
 import PropTypes from 'prop-types'
-import Image from 'next/image'
 import Link from 'next/link'
 import cn from 'classnames'
 import { useConfig } from '@/lib/config'
@@ -9,146 +10,87 @@ import NotionRenderer from '@/components/NotionRenderer'
 import TableOfContents from '@/components/TableOfContents'
 import ReadingProgress from '@/components/ReadingProgress'
 import { Avatar as OptimizedAvatar } from '@/components/ui/OptimizedImage'
-import { Card, CardHeader, CardContent } from '@/components/ui/Card'
-import { Stack } from '@/components/ui/Grid'
+import { Text } from '@/components/ui/Typography'
+import { Flex } from '@/components/ui/Grid'
+import React from 'react'
 
-/**
- * A post renderer
- *
- * @param {PostProps} props
- *
- * @typedef {object} PostProps
- * @prop {object}   post       - Post metadata
- * @prop {object}   blockMap   - Post block data
- * @prop {string}   emailHash  - Author email hash (for Gravatar)
- * @prop {boolean} [fullWidth] - Whether in full-width mode
- */
 export default function Post (props) {
   const BLOG = useConfig()
   const { post, blockMap, emailHash, fullWidth = false } = props
   const { dark } = useTheme()
 
   return (
-    <article className={cn('flex flex-col', fullWidth ? 'md:px-24' : 'items-center')}>
-      <h1 className={cn(
-        'w-full font-bold text-3xl text-black dark:text-white',
-        { 'max-w-2xl px-4': !fullWidth }
-      )}>
-        {post.title}
-      </h1>
-      {post.type[0] !== 'Page' && (
-        <nav className={cn(
-          'w-full flex mt-7 items-start text-gray-500 dark:text-gray-400',
-          { 'max-w-2xl px-4': !fullWidth }
-        )}>
-          <div className="flex mb-4">
-            <a href={BLOG.socialLink || '#'} className="flex items-center">
-              <OptimizedAvatar
-                alt={BLOG.author}
-                size="sm"
-                src={`https://gravatar.com/avatar/${emailHash}`}
-                priority={false}
-              />
-              <p className="ml-2 md:block">{BLOG.author}</p>
-            </a>
-            <span className="block">&nbsp;/&nbsp;</span>
-          </div>
-          <div className="mr-2 mb-4 md:ml-0">
-            <FormattedDate date={post.date} />
-          </div>
-          {post.tags && (
-            <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags gap-2">
-              {post.tags.map(tag => (
-                <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
-                  <span className="text-sm px-2.5 py-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md transition-colors cursor-pointer border border-gray-200 dark:border-gray-700 whitespace-nowrap">
-                    {tag}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          )}
-        </nav>
-      )}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:gap-x-16">
-          {/* Left Sidebar */}
-          {!fullWidth && (
-            <div className="hidden lg:block lg:w-48 lg:flex-shrink-0 lg:pl-8">
-              <div className="sticky top-24">
-                <div className="space-y-6">
-                  <div className="pl-4 border-l border-gray-200 dark:border-gray-700">
-                    <ReadingProgress />
-                  </div>
-                  
-                  <div className="pl-4 border-l border-gray-200 dark:border-gray-700 space-y-5">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                          {new Date(post.date).toLocaleDateString('zh-CN', { 
-                            month: 'short', 
-                            day: 'numeric' 
-                          })}
-                        </span>
-                      </div>
-                    </div>
+    <>
+      <ReadingProgress />
 
-                    {post.tags && post.tags.length > 0 && (
-                      <Card variant="flat" className="p-0 border-none shadow-none">
-                        <CardHeader className="pb-3">
-                          <div className="flex items-center gap-2">
-                            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                            </svg>
-                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                              标签
-                            </span>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                          {post.tags.slice(0, 4).map(tag => (
-                            <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
-                              <div className="group flex items-center gap-2 cursor-pointer">
-                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors" />
-                                <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors truncate">
-                                  {tag}
-                                </span>
-                              </div>
-                            </Link>
-                          ))}
-                        </CardContent>
-                      </Card>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+      <article className={cn('flex flex-col', fullWidth ? 'px-4 md:px-24' : 'items-center')}>
+        
+        <header className={cn(
+          'w-full max-w-3xl mx-auto',
+          { 'px-4': !fullWidth }
+        )}>
+          <h1 className="font-bold text-3xl md:text-4xl text-black dark:text-white my-8 leading-tight">
+            {post.title}
+          </h1>
+
+          {post.type[0] !== 'Page' && (
+            <Flex as="nav" align="center" gap={3} wrap={true} className="text-gray-600 dark:text-gray-400 mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
+              <Flex align="center" gap={2}>
+                <OptimizedAvatar
+                  alt={BLOG.author}
+                  size="xs"
+                  src={`https://gravatar.com/avatar/${emailHash}`}
+                />
+                <Text size="sm" weight="medium">{BLOG.author}</Text>
+              </Flex>
+              <Text size="sm" className="text-gray-400 dark:text-gray-500">·</Text>
+              <Text size="sm">
+                <FormattedDate date={post.date} />
+              </Text>
+              {post.tags && post.tags.length > 0 && (
+                <>
+                  <Text size="sm" className="text-gray-400 dark:text-gray-500 hidden md:block">·</Text>
+                  <Flex gap={2} wrap={true} className="max-w-full">
+                    {post.tags.map(tag => (
+                      <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`} passHref legacyBehavior>
+                        <Text as="a" size="sm" className="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors whitespace-nowrap">
+                          #{tag}
+                        </Text>
+                      </Link>
+                    ))}
+                  </Flex>
+                </>
+              )}
+            </Flex>
           )}
-          
-          {/* Main Content */}
-          <div className={cn('flex-1 min-w-0', fullWidth ? 'lg:pr-8' : '')}>
+        </header>
+
+        {/* [布局修复] 调整网格容器和列分配 */}
+        <div className={cn('w-full', { 'max-w-5xl mx-auto': !fullWidth })}>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-x-12">
+            
+            {/* 主内容区域 */}
             <div className={cn(
-              'prose prose-lg max-w-none',
-              'text-gray-900 dark:text-gray-100',
-              !fullWidth && 'lg:max-w-3xl'
+              'lg:col-span-4', // 在5列网格中占据4列
+              'prose dark:prose-invert max-w-none',
+              'prose-a:text-primary-600 dark:prose-a:text-primary-400 hover:prose-a:text-primary-700',
+              'prose-img:rounded-lg prose-img:shadow-md'
             )}>
               <NotionRenderer recordMap={blockMap} fullPage={false} darkMode={dark} />
             </div>
+
+            {/* 右侧目录 (仅在非全宽模式下显示) */}
+            {!fullWidth && (
+              <aside className="hidden lg:block lg:col-span-1"> {/* 占据1列 */}
+                <div className="sticky top-24">
+                  <TableOfContents blockMap={blockMap} />
+                </div>
+              </aside>
+            )}
           </div>
-          
-          {/* Right Sidebar */}
-          {!fullWidth && (
-            <div className="hidden lg:block lg:w-52 lg:flex-shrink-0 lg:pr-4">
-              <div className="sticky top-24">
-                <TableOfContents blockMap={blockMap} className="pt-3" style={{ top: '65px' }} />
-              </div>
-            </div>
-          )}
         </div>
-      </div>
-    </article>
+      </article>
+    </>
   )
 }
 

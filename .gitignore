@@ -40,7 +40,16 @@ public/sitemap.xml
 .env*.local
 
 # claude
+.claude
 BLOG_OPTIMIZATION_PLAN.md
 BLOG_OPTIMIZATION_SUMMARY.md
 PERFORMANCE_VALIDATION_REPORT.md
 nobelium_all_files.txt
+AGENTS.md
+ALGOLIA_INTEGRATION.md
+IMPLEMENTATION_PLAN.md
+nobelium_all_files_gemini_full.md
+*.log
+VERCEL_DEPLOYMENT_GUIDE.md
+components/ui/Button.js.backup
+PROJECT_STATUS.md

@@ -16,7 +16,7 @@ const nextConfig = {
   // 实验性功能
   experimental: {
     // 优化CSS
-    optimizeCss: true,
+    // optimizeCss: true,
     // 启用Web Vitals
     webVitalsAttribution: ['CLS', 'LCP'],
   },

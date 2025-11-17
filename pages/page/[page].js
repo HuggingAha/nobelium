@@ -1,15 +1,24 @@
 import { config } from '@/lib/server/config'
-
 import Container from '@/components/Container'
 import BlogPost from '@/components/BlogPost'
 import Pagination from '@/components/Pagination'
 import { getAllPosts } from '@/lib/notion'
+// [新增] 导入 Grid 组件
+import { Grid } from '@/components/ui/Grid'
 
 const Page = ({ postsToShow, page, showNext, totalPages }) => {
   return (
     <Container>
-      {postsToShow &&
-        postsToShow.map(post => <BlogPost key={post.id} post={post} />)}
+      {postsToShow && (
+        // [修改] 将 div.map 结构替换为 Grid 组件
+        <Grid
+          columns={{ default: 1, md: 2, lg: 3 }}
+          gap={8}
+          className="my-8"
+        >
+          {postsToShow.map(post => <BlogPost key={post.id} post={post} />)}
+        </Grid>
+      )}
       <Pagination page={page} showNext={showNext} totalPages={totalPages} />
     </Container>
   )
